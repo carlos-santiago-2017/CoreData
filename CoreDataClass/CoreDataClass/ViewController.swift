@@ -17,8 +17,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         title = "The list"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
     }
+    
     @IBAction func addTaskName(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "New Task",
                                       message: "Add a New task",
@@ -60,7 +60,6 @@ class ViewController: UIViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-
 }
 
 extension ViewController: UITableViewDataSource {
@@ -74,6 +73,11 @@ extension ViewController: UITableViewDataSource {
         cell.textLabel?.text = task.value(forKeyPath: "name") as? String
         return cell
     }
-    
-    
 }
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+}
+
