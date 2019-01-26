@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    var tasks: [String] = []
+    var tasks: [NSManagedObject] = []
  
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,7 @@ class ViewController: UIViewController {
             guard
                 let textField = alert.textFields?.first,
                 let nameToSave = textField.text else { return }
-            self.tasks.append(nameToSave)
+            self.save(name: nameToSave)
             self.tableView.reloadData()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -34,6 +35,19 @@ class ViewController: UIViewController {
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
         present(alert, animated: true)
+    }
+    func save(name: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
+        let task = NSManagedObject(entity: entity, insertInto: managedContext)
+        task.setValue(name, forKey: "name")
+        do {
+            try managedContext.save()
+            tasks.append(task)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
 
 }
@@ -45,7 +59,8 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = tasks[indexPath.row]
+        let task = tasks[indexPath.row]
+        cell.textLabel?.text = task.value(forKeyPath: "name") as? String
         return cell
     }
     
