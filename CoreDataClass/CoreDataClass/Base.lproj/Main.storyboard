@@ -52,7 +52,7 @@
             </objects>
             <point key="canvasLocation" x="1134" y="789"/>
         </scene>
-        <!--View Controller-->
+        <!--Title-->
         <scene sceneID="04p-Dv-dXj">
             <objects>
                 <viewController id="dSC-2G-jfC" sceneMemberID="viewController">
@@ -87,6 +87,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bx8-HA-oEE"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="1Ht-Ic-5YZ">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="5Yq-gu-irC"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gk8-hl-1CI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
