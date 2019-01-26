@@ -19,8 +19,21 @@ class ViewController: UIViewController {
         
     }
     @IBAction func addTaskName(_ sender: UIBarButtonItem) {
-        
-        
+        let alert = UIAlertController(title: "New Task",
+                                      message: "Add a New task",
+                                      preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] action in
+            guard
+                let textField = alert.textFields?.first,
+                let nameToSave = textField.text else { return }
+            self.tasks.append(nameToSave)
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addTextField()
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 
 }
